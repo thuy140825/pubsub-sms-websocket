@@ -1,0 +1,64 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+allprojects {
+	repositories {
+		mavenCentral()
+	}
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+dependencies {
+	implementation project(":api")       // nếu root gọi api
+	implementation project(":service")   // nếu root gọi service
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(17)
+		}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'com.twilio.sdk:twilio:10.9.2'
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+}

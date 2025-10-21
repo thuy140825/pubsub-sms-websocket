@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+    implementation("com.google.firebase:firebase-admin:9.5.0")
+    implementation("com.google.cloud:google-cloud-pubsub:1.121.0")
+    implementation("org.springframework.kafka:spring-kafka:4.0.0-M3")
+    implementation("org.springframework.boot:spring-boot-starter-websocket:3.5.4")
+}
+
+test {
+    useJUnitPlatform()
+}
